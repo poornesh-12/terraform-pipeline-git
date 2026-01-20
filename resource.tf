@@ -59,18 +59,17 @@ resource "azurerm_linux_virtual_machine" "vmlinux" {
   name                = var.vmname
   resource_group_name = azurerm_resource_group.poorneshtf.name
   location            = azurerm_resource_group.poorneshtf.location
-  size                = "Standard_D2s_v5"
+   size                = "Standard_D2ls_v5"
   admin_username      = "adminuser"
-
   network_interface_ids = [
-    azurerm_network_interface.nic.id
+    azurerm_network_interface.nic.id,
   ]
 
-  admin_ssh_key {
+ admin_ssh_key {
     username   = "adminuser"
-    public_key = file("~/.ssh/id_rsa.pub")
-  }
+    public_key = file("${path.module}/ssh-key.pub")
 
+  }
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
